@@ -1,6 +1,6 @@
 JSONAPIClient = {Resource} = require 'json-api-client'
 apiClient = require './client'
-authClient = require './auth'
+authClient = apiClient.auth
 
 # Staging:
 # https://talk-staging.zooniverse.org
