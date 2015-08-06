@@ -10,6 +10,7 @@ PromiseRenderer = require '../components/promise-renderer'
 SubjectViewer = require '../components/subject-viewer'
 Loading = require '../components/loading-indicator'
 {Link} = require 'react-router'
+{Pager} = require 'pagerz';
 
 VALID_COLLECTION_MEMBER_SUBJECTS_PARAMS = ['page', 'page_size']
 
@@ -18,30 +19,7 @@ counterpart.registerTranslations 'en',
     error: 'There was an error listing this collection.'
     noSubjects: 'No subjects in this collection.'
 
-module?.exports = React.createClass
-  displayName: 'CollectionShowList'
-  mixins: [Router.Navigation, Router.State]
-
-  componentDidMount: ->
-    @fetchCollectionSubjects pick @props.query, VALID_COLLECTION_MEMBER_SUBJECTS_PARAMS
-
-  componentWillReceiveProps: (nextProps) ->
-    @fetchCollectionSubjects pick nextProps.query, VALID_COLLECTION_MEMBER_SUBJECTS_PARAMS
-
-  fetchCollectionSubjects: (query = null) ->
-    query ?= @props.query
-
-    defaultQuery =
-      page: 1
-      page_size: 12
-
-    query = Object.assign defaultQuery, query
-    return @props.collection.get 'subjects', query
-
-  onPageChange: (page) ->
-    nextQuery = Object.assign @props.query, { page }
-    @transitionTo @getPath(), @props.params, nextQuery
-
+SubjectNode = React.createClass
   handleDeleteSubject: (subject) ->
     @props.collection.removeLink 'subjects', [subject.id.toString()]
       .then =>
@@ -70,14 +48,13 @@ module?.exports = React.createClass
       {owner: owner, name: name, id: subject.id}
 
   render: ->
-    subjectNode = (subject) =>
-      <div className="collection-subject-viewer" key={subject.id}>
-        <SubjectViewer defaultStyle={false} subject={subject} user={@props.user}>
+      <div className="collection-subject-viewer">
+        <SubjectViewer subject={@props.subject} defaultStyle={false} user={@props.user}>
           {if @isOwnerOrCollaborator()
-            <button type="button" className="collection-subject-viewer-delete-button" onClick={@handleDeleteSubject.bind @, subject}>
+            <button type="button" className="collection-subject-viewer-delete-button" onClick={@handleDeleteSubject.bind @, @props.subject}>
               <i className="fa fa-close" />
             </button>}
-          <PromiseRenderer promise={@fetchProjectOwner(subject)}>{ (params) =>
+          <PromiseRenderer promise={@fetchProjectOwner(@props.subject)}>{ (params) =>
             <Link className="subject-link" to="project-talk-subject" params={params}>
               <span></span>
             </Link>
@@ -85,6 +62,27 @@ module?.exports = React.createClass
         </SubjectViewer>
       </div>
 
+module?.exports = React.createClass
+  displayName: 'CollectionShowList'
+  mixins: [Router.Navigation, Router.State]
+
+  componentDidMount: ->
+    @fetchCollectionSubjects pick @props.query, VALID_COLLECTION_MEMBER_SUBJECTS_PARAMS
+
+  componentWillReceiveProps: (nextProps) ->
+    @fetchCollectionSubjects pick nextProps.query, VALID_COLLECTION_MEMBER_SUBJECTS_PARAMS
+
+  fetchCollectionSubjects: (query = null) ->
+    query ?= @props.query
+
+    defaultQuery =
+      page: 1
+      page_size: 12
+
+    query = Object.assign defaultQuery, query
+    return @props.collection.get 'subjects', query
+
+  render: ->
     pendingFunc = ->
       <Loading />
 
@@ -97,14 +95,10 @@ module?.exports = React.createClass
           <Translate component="p" content="collectionSubjectListPage.noSubjects" />}
 
         {if subjects.length > 0
-          <div>
-            <div className="collection-subjects-list">{subjects.map(subjectNode)}</div>
-
-            <Paginator
-              page={+@props.query.page}
-              onPageChange={@onPageChange}
-              pageCount={subjects[0].getMeta().page_count} />
-          </div>}
+          {page_count, page} = subjects[0].getMeta()
+          <Pager resourceProp={"subject"} data={subjects} currentPage={page} pageCount={page_count}>
+            <SubjectNode {...@props} />
+          </Pager>}
       </div>
 
     <PromiseRenderer
