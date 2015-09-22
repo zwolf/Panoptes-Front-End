@@ -78,7 +78,7 @@ EditWorkflowPage = React.createClass
             </AutoSave>
             <small className="form-help">If you let your volunteers choose which workflow to attempt, this text will appear as an option on the project front page.</small>
 
-            <br />
+            <hr />
 
             <div>
               <div className="nav-list standalone">
@@ -172,6 +172,29 @@ EditWorkflowPage = React.createClass
             </div>
 
             <p className="form-help"><small>A task is a unit of work you are asking volunteers to do. You can ask them to answer a question or mark an image. Add a task by clicking the question or marking buttons below.</small></p>
+
+            <hr />
+
+            <div>
+              <span className="form-label">Overall tasks</span>
+              <br />
+              <ul>
+                {for taskDescription, i in @props.workflow.overall_tasks ? []
+                  taskDescription._key ?= Math.random()
+                  TaskComponent = tasks[taskDescription.type]
+                  {Editor} = TaskComponent
+                  taskLabel = TaskComponent.getTaskText taskDescription
+                  <li key={taskDescription._key}>
+                    <TriggeredModalForm trigger={taskLabel} triggerProps={
+                      className: 'minor-button'
+                    }>
+                      <Editor workflow={@props.workflow} task={taskDescription} taskPrefix="overall_tasks.#{i}" />
+                    </TriggeredModalForm>
+                  </li>}
+              </ul>
+              <button type="button" onClick={@handleAddOverallTask}>Add an overall task</button>
+              <p className="form-help"><small>These tasks are concerned with the subject as as whole, <strong>independent of the normal task flow</strong>.</small></p>
+            </div>
 
             <hr />
 
@@ -341,6 +364,11 @@ EditWorkflowPage = React.createClass
   handleSetHideClassificationSummaries: (e) ->
     @props.workflow.update
       'configuration.hide_classification_summaries': e.target.checked
+
+  handleAddOverallTask: ->
+    @props.workflow.overall_tasks ?= []
+    @props.workflow.overall_tasks.push tasks.single.getDefaultTask()
+    @props.workflow.update 'overall_tasks'
 
   handleSubjectSetToggle: (subjectSet, e) ->
     shouldAdd = e.target.checked
