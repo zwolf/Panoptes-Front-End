@@ -29,18 +29,18 @@ workflow = apiClient.type('workflows').create
 
   overall_tasks: [{
     type: 'single'
-    question: 'And how does this make you _feel_?'
+    question: 'And how does this image make you _feel_?'
     answers: [
-      {label: ':) Radical'}
-      {label: ':| Ehhh'}
-      {label: ':( Poop'}
+      {label: ':) Good'}
+      {label: ':( Bad'}
     ]
   }, {
     type: 'multiple'
-    question: ''
+    question: 'Anything else?'
     answers: [
-      {label: 'Fire'}
-      {label: 'Nothing here'}
+      {label: ':fire: Fire'}
+      {label: ':ghost: Ghosts'}
+      {label: ':no_entry_sign: Nothing here'}
     ]
   }]
 
@@ -270,9 +270,9 @@ subject = apiClient.type('subjects').create
   id: 'MOCK_SUBJECT_FOR_CLASSIFIER'
 
   locations: [
-    {'image/jpeg': if navigator?.onLine then 'http://lorempixel.com/320/240/animals/1' else BLANK_IMAGE}
-    {'image/jpeg': if navigator?.onLine then 'http://lorempixel.com/320/240/animals/2' else BLANK_IMAGE}
-    {'image/jpeg': if navigator?.onLine then 'http://lorempixel.com/320/240/animals/3' else BLANK_IMAGE}
+    {'image/jpeg': if navigator.onLine then 'http://lorempixel.com/900/600/animals/1' else BLANK_IMAGE}
+    {'image/jpeg': if navigator.onLine then 'http://lorempixel.com/900/600/animals/2' else BLANK_IMAGE}
+    {'image/jpeg': if navigator.onLine then 'http://lorempixel.com/900/600/animals/3' else BLANK_IMAGE}
   ]
 
   metadata:

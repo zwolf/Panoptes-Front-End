@@ -11,13 +11,14 @@ module.exports = React.createClass
     help: ''
     required: false
     answers: []
+    inline: false
 
   getInitialState: ->
     helping: false
 
   render: ->
     <div className="workflow-task">
-      <Markdown className="question">{@props.question}</Markdown>
+      <Markdown className="question" inline={@props.inline}>{@props.question}</Markdown>
       {@props.children}
       <div className="answers">
         {React.Children.map @props.answers, (answer) ->

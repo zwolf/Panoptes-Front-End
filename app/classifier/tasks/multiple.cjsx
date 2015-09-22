@@ -90,6 +90,7 @@ module.exports = React.createClass
   getDefaultProps: ->
     task: null
     annotation: null
+    inline: false
     onChange: NOOP
 
   render: ->
@@ -97,10 +98,10 @@ module.exports = React.createClass
       answer._key ?= Math.random()
       <label key={answer._key} className="minor-button #{if i in @props.annotation.value then 'active' else ''}">
         <input type="checkbox" checked={i in @props.annotation.value} onChange={@handleChange.bind this, i} />
-        <Markdown>{answer.label}</Markdown>
+        <Markdown inline={@props.inline}>{answer.label}</Markdown>
       </label>
 
-    <GenericTask question={@props.task.question} help={@props.task.help} answers={answers} required={@props.task.required} />
+    <GenericTask question={@props.task.question} help={@props.task.help} answers={answers} required={@props.task.required} inline={@props.inline} />
 
   handleChange: (index, e) ->
     answers = @props.annotation.value

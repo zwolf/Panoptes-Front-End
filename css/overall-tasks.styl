@@ -2,10 +2,24 @@
   font-size: 12px
 
   .workflow-task
-    display: flex
+    background: rgba(gray, 0.2)
+    border-radius: 0.3em
+    display: block
+    margin: 0.5em 0
+    padding: 0.5em 1em
 
-    & + .workflow-task
-      margin-top: 0
+    .markdown,
+    .answers
+      display: inline
+
+    .question
+      margin-right: 0.5em
 
     .answer
-      display: inline-flex
+      display: inline-block
+
+    .minor-button
+      font-weight: bold
+      box-shadow: 0 0 1px
+      margin: 0 0.3em
+      padding: 0 0.3em

@@ -156,6 +156,7 @@ module.exports = React.createClass
               key={taskDescription._key}
               task={taskDescription}
               annotation={@props.classification.overall_annotations[i]}
+              inline={true}
               onChange={@props.classification.update.bind @props.classification, 'annotations'}
             />}
         </div>}
