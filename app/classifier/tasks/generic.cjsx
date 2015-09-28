@@ -37,19 +37,31 @@ module.exports = React.createClass
         </div>}
 
       {if @props.help
-        <div>
-          <hr />
-          <p>
-            <small>
-              <strong>
-                <button type="button" className="minor-button" onClick={@showHelp}>
-                  Need some help with this task?
-                </button>
-              </strong>
-            </small>
-          </p>
-        </div>}
+        if @props.inline
+          @renderInlineHelp()
+        else
+          @renderHelp()}
     </div>
+
+  renderInlineHelp: ->
+    <button type="button" className="minor-button ball-button" title="Help" aria-label="Help" onClick={@showHelp}>
+      <i className="fa fa-question-circle"></i>
+    </button>
+
+  renderHelp: ->
+    <div>
+      <hr />
+      <p>
+        <small>
+          <strong>
+            <button type="button" className="minor-button" onClick={@showHelp}>
+              Need some help with this task?
+            </button>
+          </strong>
+        </small>
+      </p>
+    </div>
+
 
   showHelp: ->
     alert <div className="content-container">
