@@ -36,6 +36,7 @@ counterpart.registerTranslations 'en',
       faq: 'FAQ'
       education: 'Education'
       talk: 'Talk'
+      stats: 'Stats'
 
 ProjectAvatar = React.createClass
   displayName: 'ProjectAvatar'
@@ -120,6 +121,9 @@ ProjectPage = React.createClass
               }</PromiseRenderer>}
             <Link to="project-talk" params={params} className="tabbed-content-tab">
               <Translate content="project.nav.talk" />
+            </Link>
+            <Link to="project-stats" params={params} className="tabbed-content-tab">
+              <Translate content="project.nav.stats" />
             </Link>
             {for link, i in @props.project.urls
               link._key ?= Math.random()

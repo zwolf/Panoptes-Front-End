@@ -59,6 +59,7 @@ module.exports =
     </Route>
     <Route name="project-faq" path="faq/?" handler={require './pages/project/faq'} />
     <Route name="project-education" path="education/?" handler={require './pages/project/education'} />
+    <Route name="project-stats" path="stats/?" handler={require './pages/project/stats'} />
   </Route>
 
   <Route name="notifications" path="notifications/?" handler={require './pages/notifications'} />
