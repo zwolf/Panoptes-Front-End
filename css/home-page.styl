@@ -1,3 +1,8 @@
+//orange = #FFB03B  //NOTE: variables.styl does not seem to be acknowldged in this file. Requires testing. (-SAN 20151211)
+orange = #eeaa33
+offwhite = #F5F5F5
+mobile-width = 600px
+
 .home-page
   background: #f4f4f4
 
@@ -41,6 +46,131 @@
       &:hover
         background: lighten(COBOLT_BLUE, 20%)
 
+    .user-dashboard
+      text-align: left
+      
+      nav
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-around
+        width: 100%
+        
+        @media screen and (max-width: mobile-width)
+          max-width: 400px
+          margin: 0 auto
+        
+        a
+          display: flex
+          flex: 0 0 48%
+          margin: 1em auto
+          align-items: stretch
+          text-decoration: none
+          color: offwhite
+          
+          @media screen and (max-width: mobile-width)
+            flex: 0 0 100%
+          
+          img
+            display: block
+          
+          span
+            line-height: 64px
+            overflow: hidden
+            position: relative
+          
+            &:first-child
+              position: relative
+              overflow: hidden
+              width: 64px
+              height: 64px
+              margin-right: 1em
+
+              .mega-counter
+              .mini-counter
+                position: absolute
+                top: 0
+                right: 0
+                background: #3cc
+                border-radius: 32px
+                text-align: center
+
+              .mini-counter
+                width: 24px
+                height: 24px
+                font-size: 16px
+                line-height: 24px
+
+              .mega-counter
+                width: 64px
+                height: 64px
+                font-size: 24px
+                line-height: 64px
+            
+  .latest-on-talk
+    background: offwhite
+    display: flex
+    flex-direction: column
+    justify-content: center
+    padding: 6vh 3vw
+    color: orange
+    max-width: 1000px
+    margin: 0 auto
+    
+    h3
+      padding: 0
+      margin: 0
+      color: orange
+      
+    ul
+      display: flex
+      flex-wrap: wrap
+      padding: 0
+      margin: 0
+      list-style: none
+      justify-content: space-between
+      
+      li
+        flex: 0 0 30%
+        padding: 0 
+        margin: 0
+        
+        @media screen and (max-width: mobile-width)
+          flex-basis: 100%
+          margin-bottom: 1em
+        
+        &:first-child
+        &:last-child
+          margin: 0
+        
+        a
+          color: orange
+          text-decoration: none
+
+        h4
+          font-size: 1.2em
+          font-weight: bold
+          margin: 1em 0
+          padding: 0
+
+        time
+          display: block
+          font-size: 0.8em
+
+        p
+          color: orange
+          padding: 0
+        
+        .user
+          display: flex
+          flex-direction: row
+          align-items: center
+          
+          img
+          span
+            display: block
+            margin-right: 1em
+            vertical-align: center
+  
   .featured-projects, .recent-projects
     align-items: center
     display: flex
@@ -108,3 +238,4 @@
 
             p
               color: #5a5a5a
+

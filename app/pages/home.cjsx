@@ -73,6 +73,10 @@ module.exports = React.createClass
     aboutItems = ['contribute', 'explore', 'collaborate', 'discover']
 
     <div className="home-page">
+    
+      {# Zooniverse Hero Section }
+      {# ---------------------------------------------------------------- }
+      {###
       <section className="hero on-dark">
         <ZooniverseLogoType />
         {if @props.user
@@ -116,6 +120,74 @@ module.exports = React.createClass
             <Link to="projects" className="call-to-action standard-button hero-button x-large"><Translate content="home.hero.button" /></Link>
           </div>}
       </section>
+      ###}
+      
+      <section className="hero on-dark">
+        {if @props.user
+          <div className="user-dashboard">
+            <h3>ZOONIVERSE</h3>
+            <p>Hello, {@props.user.display_name}!</p>
+            <nav>
+              <a href="#"><span><img src="./assets/test-icon-64.svg" /></span><span>Recent Project</span></a>
+              <a href="#"><span><img src="./assets/test-icon-64.svg" /><div className="mini-counter">10</div></span><span>New Messages</span></a>
+              <a href="#"><span><img src="./assets/test-icon-64.svg" /></span><span>My Projects</span></a>
+              <a href="#"><span><img src="./assets/test-icon-64.svg" /></span><span>My Stats</span></a>
+              <a href="#"><span><img src="./assets/test-icon-64.svg" /></span><span>My Collections</span></a>
+              <a href="#"><span><img src="./assets/test-icon-64.svg" /><div className="mega-counter">7</div></span><span>My Projects</span></a>
+            </nav>
+          </div>
+         else
+          <div>
+            <h3 className="hero-title"><Translate content="home.hero.title" /></h3>
+            <p className="hero-tagline"><Translate content="home.hero.tagline" /></p>
+            <Link to="projects" className="call-to-action standard-button hero-button x-large"><Translate content="home.hero.button" /></Link>
+          </div>
+        }
+      </section>
+      {# ---------------------------------------------------------------- }
+      
+      {# Zooniverse "Latest On Talk" Section }
+      {# ---------------------------------------------------------------- }
+      {if @props.user?
+        <section className="latest-on-talk">
+          <h3>Latest on Talk</h3>
+          <ul>
+            <li>
+              <time>31/12/2015</time>
+              <h4><a href="#">Talk Title 1</a></h4>
+              <p>Sample talk paragraph. Text text text text text. Text text text text text. Text text text text text.</p>
+              <div className="user">
+                <img src="./assets/test-icon-64.svg" style={{"width":"32px"}} /><span>User X</span>
+              </div>
+            </li>
+            <li>
+              <time>31/12/2015</time>
+              <h4><a href="#">Talk Title 2</a></h4>
+              <p>Sample talk paragraph. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text.</p>
+              <div className="user">
+                <img src="./assets/test-icon-64.svg" style={{"width":"32px"}} /><span>User X</span>
+              </div>
+            </li>
+            <li>
+              <time>31/12/2015</time>
+              <h4><a href="#">Talk Title 3</a></h4>
+              <p>Sample talk paragraph. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text. Text text text text text.</p>
+              <div className="user">
+                <img src="./assets/test-icon-64.svg" style={{"width":"32px"}} /><span>User X</span>
+              </div>
+            </li>
+          </ul>
+        </section>}
+      {# ---------------------------------------------------------------- }
+      
+        <section className="TEST">
+          {### ###}
+          {### ###}
+        </section>
+
+      
+      {# Zooniverse About-Info Section }
+      {# ---------------------------------------------------------------- }
       {unless @props.user?
         <section className="about-zooniverse">
           <div className="about-items-list">
@@ -132,6 +204,10 @@ module.exports = React.createClass
             }
           </div>
         </section>}
+      {# ---------------------------------------------------------------- }
+
+      {# Zooniverse Bottom Section }
+      {# ---------------------------------------------------------------- }
       <section className="featured-projects content-container">
         {if @props.user?
            <Translate component="h5" content="home.featuredProjects.loggedTitle" />
@@ -139,6 +215,8 @@ module.exports = React.createClass
            <Translate component="h5" content="home.featuredProjects.title" />}
         <FeaturedProjects />
       </section>
+      {# ---------------------------------------------------------------- }
+      
     </div>
 
   showLoginDialog: (which) ->
