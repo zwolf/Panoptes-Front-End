@@ -179,13 +179,7 @@ module.exports = React.createClass
           </ul>
         </section>}
       {# ---------------------------------------------------------------- }
-      
-        <section className="TEST">
-          {### ###}
-          {### ###}
-        </section>
 
-      
       {# Zooniverse About-Info Section }
       {# ---------------------------------------------------------------- }
       {unless @props.user?
