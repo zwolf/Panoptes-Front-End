@@ -12,10 +12,13 @@ Classifier = require '../../classifier'
 alert = require '../../lib/alert'
 SignInPrompt = require '../../partials/sign-in-prompt'
 seenThisSession = require '../../lib/seen-this-session'
+MiniCourse = require '../../lib/mini-course'
 
 FAILED_CLASSIFICATION_QUEUE_NAME = 'failed-classifications'
 
 PROMPT_TO_SIGN_IN_AFTER = [5, 10, 25, 50, 100, 250, 500]
+
+PROMPT_MINI_COURSE_EVERY = 5
 
 SKIP_CELLECT = location?.search.match(/\Wcellect=0(?:\W|$)/)?
 
@@ -271,6 +274,7 @@ module.exports = React.createClass
 
       classificationsThisSession += 1
       @maybePromptToSignIn()
+      @maybeLaunchMiniCourse()
 
     return savingClassification
 
@@ -318,6 +322,12 @@ module.exports = React.createClass
         currentWorkflowForProject[@props.project.id] = null
       @loadAppropriateClassification()
 
+  maybeLaunchMiniCourse: ->
+    if classificationsThisSession % PROMPT_MINI_COURSE_EVERY is 0
+      apiClient.type('minicourses').get project_id: @props.project.id
+        .then([minicourse]) =>
+          MiniCourse.start.bind(MiniCourse, @props.user, @props.project)
+          
 # For debugging:
 window.currentWorkflowForProject = currentWorkflowForProject
 window.currentClassifications = currentClassifications
