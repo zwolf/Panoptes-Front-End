@@ -64,6 +64,7 @@ module.exports = React.createClass
                   mediaByID[mediaResource.id] = mediaResource
 
                 MiniCourseComponent = this
+
                 Dialog.alert(<MiniCourseComponent steps={tutorial.steps} media={mediaByID} />, {
                   className: 'tutorial-dialog', #reusing tutorial styling
                   required: true,
