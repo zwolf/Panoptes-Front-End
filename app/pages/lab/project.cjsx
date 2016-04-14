@@ -47,6 +47,9 @@ EditProjectPage = React.createClass
           <li><IndexLink to={@labPath()} activeClassName='active' className="nav-list-item" title="Input the basic information about your project, and set up its home page.">
             Project details
           </IndexLink></li>
+          <li><Link to={@labPath('/pages')} activeClassName='active' className="nav-list-item" title="Add custom content to your project.">
+            Pages
+          </Link></li>
           <li><Link to={@labPath('/research')} activeClassName='active' className="nav-list-item" title="Explain your research to your audience here in as much detail as you’d like.">
             Research
           </Link></li>
