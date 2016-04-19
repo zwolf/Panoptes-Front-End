@@ -2,6 +2,7 @@ React = require 'react'
 projectPageActions = require './actions/project-pages'
 {Link} = require 'react-router'
 {Dialog} = require 'modal-form'
+{MarkdownEditor} = require 'markdownz'
 
 NavigationEditor = React.createClass
   getDefaultProps: ->
@@ -47,7 +48,7 @@ PageEditor = React.createClass
       <div>
         <label>
           <span className="form-label">Content</span><br />
-          <textarea ref="contentInput" className="standard-input full" defaultValue={@props.content} rows={15} cols={80} />
+          <MarkdownEditor ref="contentInput" defaultValue={@props.content} rows={15} cols={80} />
         </label>
       </div>
     </div>
@@ -122,7 +123,8 @@ PagesList = React.createClass
         <Dialog required onSubmit={@handlePageUpdate.bind this, pageBeingEdited.id} onCancel={@selectPage.bind this, ''}>
           <PageEditor ref="pageEditor" title={pageBeingEdited.title} content={pageBeingEdited.content} />
           <p style={textAlign: 'center'}>
-            <button type="submit">Save</button>
+            <button type="button" className="minor-button" onClick={@selectPage.bind this, ''}>Cancel</button>{' '}
+            <button type="submit" className="major-button">Save</button>
           </p>
         </Dialog>}
     </div>
