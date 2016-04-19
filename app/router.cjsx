@@ -103,10 +103,6 @@ module.exports =
     <Route path="lab/:projectID" component={require './pages/lab/project'}>
       <IndexRoute component={require './pages/lab/project-details'} />
       <Route path="pages" component={require './pages/lab/pages'} />
-      <Route path="research" component={require './pages/lab/research'} />
-      <Route path="results" component={require './pages/lab/results'} />
-      <Route path="faq" component={require './pages/lab/faq'} />
-      <Route path="education" component={require './pages/lab/education'} />
       <Route path="collaborators" component={require './pages/lab/collaborators'} />
       <Route path="media" component={require './pages/lab/media'} />
       <Route path="workflow/:workflowID" component={require './pages/lab/workflow'} />
