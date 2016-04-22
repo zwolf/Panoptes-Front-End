@@ -6,6 +6,8 @@ getSubjectLocation = require '../lib/get-subject-location'
 CollectionsManagerIcon = require '../collections/manager-icon'
 FrameViewer = require './frame-viewer'
 classnames = require 'classnames'
+alert = require '../lib/alert'
+SignInPrompt = require '../partials/sign-in-prompt'
 
 NOOP = Function.prototype
 
@@ -50,6 +52,12 @@ module.exports = React.createClass
       this.setState
         inFlipbookMode: allowFlipbook
 
+  promptToSignIn: ->
+    alert (resolve) ->
+      <SignInPrompt onChoose={resolve}>
+        <p>Sign in to help us make the most out of your hard work.</p>
+      </SignInPrompt>
+
   render: ->
     rootClasses = classnames('subject-viewer', {
       'default-root-style': @props.defaultStyle
@@ -64,7 +72,6 @@ module.exports = React.createClass
       mainDisplay = @renderFrame @state.frame
     else
       mainDisplay = (@renderFrame frame, {key: "frame-#{frame}"} for frame of @props.subject.locations)
-
 
     tools = switch type
       when 'image'
@@ -119,11 +126,18 @@ module.exports = React.createClass
                 <i className="fa fa-info-circle fa-fw"></i>
               </button>{' '}
             </span>}
-          {if @props.subject? and @props.user? and @props.project?
-            <span>
-              <FavoritesButton className="secret-button" project={@props.project} subject={@props.subject} user={@props.user} />{' '}
-              <CollectionsManagerIcon className="secret-button" project={@props.project} subject={@props.subject} user={@props.user} />
-            </span>}
+          {if @props.project? and @props.subject?
+            if  @props.user?
+              <span>
+                <FavoritesButton className="secret-button" project={@props.project} subject={@props.subject} user={@props.user} />{' '}
+                <CollectionsManagerIcon className="secret-button" project={@props.project} subject={@props.subject} user={@props.user} />
+              </span>
+            else
+              <span>
+                <button type="button" className="secret-button" onClick={@promptToSignIn}>
+                  <small>You should sign in!</small>
+                </button>
+              </span>}
           {if type is 'image' and @props.linkToFullImage
             <a className="button" href={src} aria-label="Subject Image" title="Subject Image" target="zooImage">
               <i className="fa fa-photo" />
@@ -131,8 +145,6 @@ module.exports = React.createClass
         </span>
       </div>
     </div>
-
-
 
   renderFrame: (frame, props = {}) ->
     <FrameViewer {...@props} {...props} frame={frame} />
@@ -177,7 +189,6 @@ module.exports = React.createClass
   handleFrameChange: (frame) ->
     @setState {frame}
     @props.onFrameChange frame
-
 
   showMetadata: ->
     # TODO: Sticky popup.
