@@ -18,8 +18,8 @@ module?.exports = React.createClass
 
   render: ->
     <button
-      className="collections-manager-icon"
+      className="collections-manager-icon #{@props.className ? ''}"
       title="Collect"
       onClick={@toggleCollectionsManagerPopup}>
-      <i className="fa fa-list" />
+      <i className="fa fa-list fa-fw" />
     </button>
