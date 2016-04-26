@@ -184,6 +184,28 @@ PageSelector = React.createClass
            <button onClick={@handleChange.bind this, page} key={page} className="pill-button" style={border: "2px solid" if active}>{page}</button>}
     </nav>
 
+ProjectStateSelector = React.createClass
+  displayName: ProjectStateSelector
+
+  fetchLiveProjects: ->
+
+
+  render: ->
+    <div>
+      <label>
+        Live
+        <input type="radio" onClick={} />
+      </label>
+      <label>
+        Paused
+        <input type="radio" onClick={} />
+      </label>
+      <label>
+        Finished
+        <input type="radio" onClick={console.log('finished')} />
+      </label>
+    </div>
+
 ProjectFilteringInterface = React.createClass
   getDefaultProps: ->
     discipline: ''
@@ -251,6 +273,10 @@ ProjectFilteringInterface = React.createClass
   handlePageChange: (page) ->
     this.props.onChangeQuery {page}
 
+  handleStateSortChange: (projectState) ->
+    page = 1
+    @props.onChangeQuery {projectState, page}
+
   setFilter: (e) ->
 
   render: ->
@@ -264,6 +290,7 @@ ProjectFilteringInterface = React.createClass
 
       <section className="resources-container">
         <DisciplineSelector value={@props.discipline} onChange={@handleDisciplineChange} />
+        <ProjectStateSelector onChange={@hanldeStateSortChange} />
         <div className="resource-results-counter">
           <SearchSelector />
           <SortSelector value={@props.sort} onChange={@handleSortChange} />
