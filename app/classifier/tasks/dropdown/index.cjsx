@@ -97,6 +97,24 @@ module?.exports = React.createClass
     else
       @props.annotation.value = @props.task.selects.map -> {value: null, option: false}
 
+    @refs["select-0"].getInputNode().focus()
+
+  componentDidUpdate: ->
+    firstEmpty = []
+    annotationValues = @props.annotation.value
+    if annotationValues.length
+      for answer, i in annotationValues
+        if answer.value is null or answer.value is ''
+          firstEmpty.push i
+        else
+          firstEmpty.unshift i
+    else
+      @props.annotation.value = @props.task.selects.map -> {value: null, option: false}
+      firstEmpty.push 0
+
+    i = firstEmpty.shift() ? 0
+    @refs["select-#{i}"].getInputNode().focus()
+
   handleOptionsKeys: (i, value) ->
     {id, condition} = @props.task.selects[i]
     optionsKeys = @state.optionsKeys
@@ -143,6 +161,7 @@ module?.exports = React.createClass
           <div key={Math.random()}>
             <div>{selects[i].title}</div>
             <Select
+              ref="select-#{i}"
               options={options}
               onChange={@onChangeSelect.bind(@, i)}
               value={@props.annotation.value[i]?.value}
