@@ -100,19 +100,16 @@ module?.exports = React.createClass
     @refs["select-0"].getInputNode().focus()
 
   componentDidUpdate: ->
-    firstEmpty = []
+    selectToFocus = []
     annotationValues = @props.annotation.value
     if annotationValues.length
       for answer, i in annotationValues
         if answer.value is null or answer.value is ''
-          firstEmpty.push i
+          selectToFocus.push i
         else
-          firstEmpty.unshift i
-    else
-      @props.annotation.value = @props.task.selects.map -> {value: null, option: false}
-      firstEmpty.push 0
+          selectToFocus.unshift i
 
-    i = firstEmpty.shift() ? 0
+    i = selectToFocus.shift() ? 0
     @refs["select-#{i}"].getInputNode().focus()
 
   handleOptionsKeys: (i, value) ->
